@@ -1,0 +1,4 @@
+# Build output - release artifacts are attached to GitHub Releases, not committed
+/bin/
+*.mcpb
+*.exe

@@ -1,0 +1,95 @@
+{
+  "manifest_version": "0.4",
+  "name": "fath-control",
+  "display_name": "free@home Control",
+  "version": "1.0.0",
+  "description": "Read sensor values and control actuators on a local ABB/Busch-Jaeger free@home smart home system.",
+  "long_description": "Connects to a free@home System Access Point (SysAP) on your local network via its local REST API. Gives Claude tools to list every sensor (temperature, movement, window/door, brightness, energy meters, ...) with its current reading, list every actuator (switches, lights, dimmers, blinds/shutters, heating/cooling valves, ...) with its current state, and set a value on an actuator by its channel name - on/off for switches, a percentage for dimmers, up/down/stop or a percentage for blinds.",
+  "author": {
+    "name": "adee42",
+    "url": "https://github.com/adee42"
+  },
+  "homepage": "https://github.com/adee42/fath-control",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/adee42/fath-control.git"
+  },
+  "server": {
+    "type": "binary",
+    "entry_point": "server/fath-mcp-server",
+    "mcp_config": {
+      "command": "${__dirname}/server/fath-mcp-server",
+      "args": [],
+      "env": {
+        "FATH_HOST": "${user_config.host}",
+        "FATH_USER": "${user_config.username}",
+        "FATH_PASSWORD": "${user_config.password}",
+        "FATH_SCHEME": "${user_config.scheme}",
+        "FATH_INSECURE": "${user_config.insecure}"
+      }
+    }
+  },
+  "tools": [
+    {
+      "name": "list_sensors",
+      "description": "List free@home sensors and their current readings"
+    },
+    {
+      "name": "list_actuators",
+      "description": "List free@home actuators and their current state"
+    },
+    {
+      "name": "set_actuator",
+      "description": "Set a value on a free@home actuator (on/off, up/down/stop, or a percentage)"
+    }
+  ],
+  "keywords": [
+    "free@home",
+    "abb",
+    "busch-jaeger",
+    "smart home",
+    "home automation",
+    "knx",
+    "sensors",
+    "actuators"
+  ],
+  "license": "MIT",
+  "user_config": {
+    "host": {
+      "type": "string",
+      "title": "SysAP host or IP",
+      "description": "IP address or hostname of your free@home System Access Point, e.g. 192.168.1.50",
+      "required": true
+    },
+    "username": {
+      "type": "string",
+      "title": "Local API username",
+      "description": "Local API user configured on the SysAP (in the free@home next app: More -> free@home Settings -> Local API)",
+      "required": true
+    },
+    "password": {
+      "type": "string",
+      "title": "Local API password",
+      "description": "Password for the local API user",
+      "sensitive": true,
+      "required": true
+    },
+    "scheme": {
+      "type": "string",
+      "title": "URL scheme",
+      "description": "\"https\" (default, what real SysAPs expect) or \"http\"",
+      "default": "https",
+      "required": false
+    },
+    "insecure": {
+      "type": "boolean",
+      "title": "Skip TLS certificate verification",
+      "description": "SysAPs present a self-signed certificate by default; leave this on unless you've installed a trusted certificate",
+      "default": true,
+      "required": false
+    }
+  },
+  "compatibility": {
+    "platforms": ["win32"]
+  }
+}
