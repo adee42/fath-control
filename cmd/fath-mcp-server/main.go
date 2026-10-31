@@ -19,7 +19,7 @@ import (
 
 const (
 	serverName    = "fath-control"
-	serverVersion = "1.0.0"
+	serverVersion = "1.1.0"
 )
 
 func main() {

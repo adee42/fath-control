@@ -17,7 +17,7 @@ Get the latest extension from the **[Releases page](https://github.com/adee42/fa
 
 - free@home **System Access Point 2.0**, firmware 2.6.0 or newer
 - **Local API enabled** in the free@home app: *More -> free@home Settings -> Local API*. Note the username shown there and the password you set.
-- For the extension: Claude Desktop on Windows x64 (the release ships a Windows binary only)
+- For the extension: Claude Desktop on **Windows x64**, **macOS (Apple Silicon)** or **Linux x64**. The macOS build has not been run and the macOS/Linux installs through Claude Desktop are untested (see the release notes). Intel Macs and ARM Linux are not covered.
 - For the CLI: Go (see `go.mod`) to build from source; it is pure Go and runs wherever Go does
 
 ## Claude Desktop extension
@@ -118,11 +118,13 @@ go test ./...
 go build ./...
 ```
 
-To build the extension bundle (Windows, PowerShell):
+To build the extension bundle (works on any OS with Go; it cross-compiles the server for Windows x64, macOS arm64 and Linux x64):
 
-```powershell
-scripts\build-mcpb.ps1      # writes bin\fath-control-<version>.mcpb and bin\SHA256SUMS
+```bash
+go run ./scripts/mcpb      # writes bin/fath-control-<version>.mcpb and bin/SHA256SUMS
 ```
+
+The build is reproducible: the same source and Go version give a byte-identical bundle.
 
 ## Disclaimer
 

@@ -2,7 +2,7 @@
   "manifest_version": "0.4",
   "name": "fath-control",
   "display_name": "free@home Control",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Read sensor values and control actuators on a local ABB/Busch-Jaeger free@home smart home system.",
   "long_description": "Connects to a free@home System Access Point (SysAP) on your local network via its local REST API. Gives Claude tools to list every sensor (temperature, movement, window/door, brightness, energy meters, ...) with its current reading, list every actuator (switches, lights, dimmers, blinds/shutters, heating/cooling valves, ...) with its current state, and set a value on an actuator by its channel name - on/off for switches, a percentage for dimmers, up/down/stop or a percentage for blinds.",
   "author": {
@@ -26,6 +26,41 @@
         "FATH_PASSWORD": "${user_config.password}",
         "FATH_SCHEME": "${user_config.scheme}",
         "FATH_INSECURE": "${user_config.insecure}"
+      },
+      "platform_overrides": {
+        "win32": {
+          "command": "${__dirname}/server/fath-mcp-server.exe",
+          "args": [],
+          "env": {
+            "FATH_HOST": "${user_config.host}",
+            "FATH_USER": "${user_config.username}",
+            "FATH_PASSWORD": "${user_config.password}",
+            "FATH_SCHEME": "${user_config.scheme}",
+            "FATH_INSECURE": "${user_config.insecure}"
+          }
+        },
+        "darwin": {
+          "command": "${__dirname}/server/fath-mcp-server-darwin-arm64",
+          "args": [],
+          "env": {
+            "FATH_HOST": "${user_config.host}",
+            "FATH_USER": "${user_config.username}",
+            "FATH_PASSWORD": "${user_config.password}",
+            "FATH_SCHEME": "${user_config.scheme}",
+            "FATH_INSECURE": "${user_config.insecure}"
+          }
+        },
+        "linux": {
+          "command": "${__dirname}/server/fath-mcp-server-linux-amd64",
+          "args": [],
+          "env": {
+            "FATH_HOST": "${user_config.host}",
+            "FATH_USER": "${user_config.username}",
+            "FATH_PASSWORD": "${user_config.password}",
+            "FATH_SCHEME": "${user_config.scheme}",
+            "FATH_INSECURE": "${user_config.insecure}"
+          }
+        }
       }
     }
   },
@@ -90,6 +125,6 @@
     }
   },
   "compatibility": {
-    "platforms": ["win32"]
+    "platforms": ["win32", "darwin", "linux"]
   }
 }
